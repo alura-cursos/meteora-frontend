@@ -1,9 +1,14 @@
-import { Product } from "../Products/mock"
 import { Button } from "../Button"
 import { Card, CardImage, CardContent, CardFooter, CardBody } from "./styles"
 
 interface CardProductInterface {
-    product: Product
+    product: {
+        id: number;
+        name: string;
+        description: string;
+        price: number;
+        image: string;
+    }
 }
 
 export const CardProduct = ({ product }: CardProductInterface) => {

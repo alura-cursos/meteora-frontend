@@ -1,45 +1,23 @@
+import { useQuery } from "@apollo/client";
 import { Category } from "../Category";
 import { Heading } from "../Heading";
 import { CategoryList, Container } from "./styles";
+import { GET_CATEGORIES } from "../../graphql/queries/categories";
 
-const categories = [
-    {
-        id: 'camisetas',
-        displayName: 'Camisetas',
-        icon: 'https://raw.githubusercontent.com/viniciosneves/meteora-assets/refs/heads/main/categories/camiseta.png',
-    },
-    {
-        id: 'bolsas',
-        displayName: 'Bolsas',
-        icon: 'https://raw.githubusercontent.com/viniciosneves/meteora-assets/refs/heads/main/categories/bolsa.png',
-    },
-    {
-        id: 'calcados',
-        displayName: 'Calçados',
-        icon: 'https://raw.githubusercontent.com/viniciosneves/meteora-assets/refs/heads/main/categories/calcados.png',
-    },
-    {
-        id: 'calcas',
-        displayName: 'Calças',
-        icon: 'https://raw.githubusercontent.com/viniciosneves/meteora-assets/refs/heads/main/categories/calca.png',
-    },
-    {
-        id: 'casacos',
-        displayName: 'Casacos',
-        icon: 'https://raw.githubusercontent.com/viniciosneves/meteora-assets/refs/heads/main/categories/casacos.png',
-    },
-    {
-        id: 'oculos',
-        displayName: 'Óculos',
-        icon: 'https://raw.githubusercontent.com/viniciosneves/meteora-assets/refs/heads/main/categories/oculos.png',
-    },
-];
+interface ICategory {
+    id: number
+    displayName: string
+    icon: string
+}
 
 export const Categories = () => {
+
+    const { data } = useQuery<{ categories: ICategory[] }>(GET_CATEGORIES);
+    
     return (<Container>
         <Heading>Busque por categoria:</Heading>
         <CategoryList>
-            {categories.map(c => <li key={c.id}><Category name={c.displayName} image={c.icon} /></li>)}
+            {data?.categories.map(c => <li key={c.id}><Category name={c.displayName} image={c.icon} /></li>)}
         </CategoryList>
     </Container>)
 }
